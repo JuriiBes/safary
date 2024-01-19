@@ -57,6 +57,7 @@ export default {
 
     computed: {
         ...mapState(useMainPageStore, ['getProductByNumberId']),
+        ...mapState(useUserAccountStore, ['getIncludesProductInCart']),
     },
     methods: {
         ...mapActions(useUserAccountStore, ['addToCartPositionsWithOrderOrFavorites']),
@@ -81,14 +82,16 @@ export default {
         addToCartPositionWithOrder() {
             let dataProductsWithOrder = []
             for (const product of this.orderItemData.productList) {
-                let itemToCart = {
-                    idProduct: product.idProduct,
-                    quantity: product.quantity,
-                    size: product.size,
+                if (this.getIncludesProductInCart(product.idProduct) < 0) {
+                    let itemToCart = {
+                        idProduct: product.idProduct,
+                        quantity: product.quantity,
+                        size: product.size,
+                    }
+                    dataProductsWithOrder.push(itemToCart)
                 }
-                dataProductsWithOrder.push(itemToCart)
             }
-            this.addToCartPositionsWithOrderOrFavorites(dataProductsWithOrder)
+            if (dataProductsWithOrder.length > 0) this.addToCartPositionsWithOrderOrFavorites(dataProductsWithOrder)
             this.$router.push({ name: 'cart' })
         },
     },

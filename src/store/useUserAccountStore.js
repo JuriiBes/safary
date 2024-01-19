@@ -27,6 +27,9 @@ export const useUserAccountStore = defineStore('account_page', {
                 } else return state.countFavoritesItem
             }
         },
+        getIncludesProductInCart: (state) => (productId) => {
+            return state.userData.cart.cartItems.findIndex((element) => element.idProduct == productId)
+        },
     },
     actions: {
         receivingUserData(iter) {
@@ -78,7 +81,7 @@ export const useUserAccountStore = defineStore('account_page', {
         },
         addToCartPositionsWithOrderOrFavorites(dataProducts) {
             for (const newCartItem of dataProducts) {
-                this.userData.cart.cartItems.push(newCartItem)
+                if (this.userData.cart.cartItems) this.userData.cart.cartItems.push(newCartItem)
             }
             this.countCartItem = this.userData.cart.cartItems.length
         },

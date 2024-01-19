@@ -42,6 +42,7 @@ export default {
     },
     computed: {
         ...mapState(useMainPageStore, ['getProductByNumberId']),
+        ...mapState(useUserAccountStore, ['getIncludesProductInCart']),
     },
     created() {
         this.productData = this.getProductByNumberId(this.favoritesId)
@@ -52,14 +53,16 @@ export default {
             this.$emit('delete')
         },
         addToCartPositionWithFavorites() {
-            let dataProductsWithFavorites = []
-            let itemToCart = {
-                idProduct: this.favoritesId,
-                quantity: 1,
-            }
-            dataProductsWithFavorites.push(itemToCart)
+            if (this.getIncludesProductInCart(this.favoritesId) < 0) {
+                let dataProductsWithFavorites = []
+                let itemToCart = {
+                    idProduct: this.favoritesId,
+                    quantity: 1,
+                }
+                dataProductsWithFavorites.push(itemToCart)
 
-            this.addToCartPositionsWithOrderOrFavorites(dataProductsWithFavorites)
+                this.addToCartPositionsWithOrderOrFavorites(dataProductsWithFavorites)
+            }
             this.$router.push({ name: 'cart' })
         },
     },

@@ -98,6 +98,7 @@ export default {
     created() {
         this.productData = this.getProductByNumberId(this.cartInfo.idProduct)
         this.favoritesSelect = this.auditFavoritesSelect(this.productData.id)
+        if (this.cartInfo.size) this.sizeSelect = this.cartInfo.size
     },
     methods: {
         ...mapActions(useUserAccountStore, [
@@ -170,8 +171,6 @@ export default {
         line-height: 1.12;
         letter-spacing: 0.0125rem;
         text-transform: uppercase;
-    }
-    [class*='__body'] {
     }
 }
 .size__body,

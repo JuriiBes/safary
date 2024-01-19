@@ -97,8 +97,6 @@ export default {
                 }
                 productListToOrder.push(newItem)
             }
-            console.log('this.dataCart')
-            console.log(this.dataCart)
 
             this.addOrderToOrders({
                 productList: productListToOrder,
