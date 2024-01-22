@@ -9,6 +9,8 @@ import TermsConditionsPage from '../pages/TermsConditionsPage/index'
 import AccountPage from '../pages/AccountPage/index'
 import CartPage from '../pages/CartPage/index'
 import CheckoutPage from '../pages/CartPage/CheckoutPage'
+import SearchPage from '../pages/SearchPage/index'
+import ProductPage from '../pages/ProductPage/index'
 
 import UserInformation from '../pages/AccountPage/InformationAccount/UserInformation'
 import AddressBook from '../pages/AccountPage/InformationAccount/AddressBook'
@@ -99,6 +101,16 @@ const routes = [
         path: '/checkout',
         name: 'checkout',
         component: CheckoutPage,
+    },
+    {
+        path: '/search/:request?',
+        name: 'search',
+        component: SearchPage,
+    },
+    {
+        path: '/product/:productId',
+        name: 'product',
+        component: ProductPage,
     },
 ]
 

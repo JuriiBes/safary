@@ -86,7 +86,7 @@ export default {
         placeOrder() {
             let productListToOrder = []
             let date = new Date()
-            let orderDate = date.getDay() + '/' + (parseInt(date.getMonth()) + 1) + '/' + date.getFullYear()
+            let orderDate = date.getDate() + '/' + (parseInt(date.getMonth()) + 1) + '/' + date.getFullYear()
             for (const cartItem of this.dataCart.cartItems) {
                 let newItem = {
                     idProduct: cartItem.idProduct,

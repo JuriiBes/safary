@@ -1,8 +1,10 @@
 <template>
     <div class="search">
         <label class="search__label"
-            ><input type="search" placeholder="Search..." class="search__input" />
-            <font-awesome-icon :icon="['fas', 'magnifying-glass']" style="color: #111111" />
+            ><input v-model="valueSearch" type="text" placeholder="Search..." class="search__input" />
+            <button type="button" @click="runSearch">
+                <font-awesome-icon :icon="['fas', 'magnifying-glass']" style="color: #111111" />
+            </button>
         </label>
     </div>
 </template>
@@ -10,6 +12,24 @@
 <script>
 export default {
     name: 'SearchHeader',
+    emits: ['clickSearch'],
+    data() {
+        return {
+            valueSearch: null,
+        }
+    },
+    methods: {
+        runSearch() {
+            this.$router.push({
+                name: 'search',
+                params: {
+                    request: this.valueSearch,
+                },
+            })
+            this.valueSearch = null
+            this.$emit('clickSearch')
+        },
+    },
 }
 </script>
 

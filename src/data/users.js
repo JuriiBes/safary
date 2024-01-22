@@ -76,5 +76,6 @@ export const usersData = [
             payment: null,
         },
         favorites: [12, 33, 8, 15, 19],
+        searchHistory: [],
     },
 ]

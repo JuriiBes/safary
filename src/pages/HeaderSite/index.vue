@@ -15,7 +15,7 @@
                 </div>
                 <div class="header__user-side user-side">
                     <div :class="['user-side__search', activeSearch]">
-                        <search-header />
+                        <search-header @click-search="closeBurgerMenu" />
                     </div>
                     <div class="user-side__body">
                         <router-link to="/account" class="user-side__item" @click="closeBurgerMenu">

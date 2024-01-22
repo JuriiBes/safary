@@ -1,7 +1,12 @@
 <template>
     <div class="card__body">
         <div class="card__image">
-            <img :src="productItem.urlAddress" alt="image product" class="card__image-product" />
+            <img
+                :src="productItem.urlAddress"
+                alt="image product"
+                class="card__image-product"
+                @click="goToProductPage(productItem.id)"
+            />
             <div class="card__hover">
                 <button type="button" class="card__favorites-add" @click="addToFavorites(productItem.id)">
                     <font-awesome-icon
@@ -17,8 +22,8 @@
                 </button>
             </div>
         </div>
-        <div class="card__product-name">{{ productItem.nameProduct }}</div>
-        <div class="card__price">₦ {{ productItem.price }}</div>
+        <div class="card__product-name" @click="goToProductPage(productItem.id)">{{ productItem.nameProduct }}</div>
+        <div class="card__price" @click="goToProductPage(productItem.id)">₦ {{ productItem.price }}</div>
     </div>
 </template>
 
@@ -41,6 +46,14 @@ export default {
         },
         addToCartList(itemId) {
             this.$emit('addCart', itemId)
+        },
+        goToProductPage(idProduct) {
+            this.$router.push({
+                name: 'product',
+                params: {
+                    productId: idProduct,
+                },
+            })
         },
     },
 }
@@ -169,12 +182,26 @@ export default {
         line-height: 1.1;
         letter-spacing: 0.2px;
         flex: 1 1 auto;
+        cursor: pointer;
+        transition: 0.3s;
+        @media (min-width: 992px) {
+            &:hover {
+                color: #ed165f;
+            }
+        }
     }
     // .card__price
     &__price {
         color: #ed165f;
         font-family: Roboto;
         font-size: 1.25rem;
+        cursor: pointer;
+        transition: 0.3s;
+        @media (min-width: 992px) {
+            &:hover {
+                color: rgba(237, 22, 94, 0.75);
+            }
+        }
     }
 }
 </style>

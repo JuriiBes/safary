@@ -1,47 +1,45 @@
 <template>
-    <div>
-        <div id="scroll-point" class="render__container">
-            <div class="render__title">{{ titleCategory }}</div>
-            <div class="render__body">
-                <div :class="['render__filter-aside', activeFilter]">
-                    <filter-category :array-data="subcategoryList" @category="categoryFilter" />
-                    <filter-size :sizes-data="sizesList" @size="sizeFilter" />
-                    <filter-color @color="colorFilter" />
-                    <filter-price @price="priceFilter" />
-                </div>
-                <div class="render__right-aside">
-                    <sort-select @sort-product="sortProductList" />
-                    <div class="render__card">
-                        <div v-for="(product, index) in getFilteredProductList" :key="index">
-                            <product-item-card
-                                :product-item="product"
-                                :favorites-select="includesFavorites(product.id)"
-                                @selected="addFavorites"
-                                @add-cart="addCartItem"
-                            />
-                        </div>
+    <div id="scroll-point" class="render__container">
+        <h2 class="render__title">{{ titleCategory }}</h2>
+        <div class="render__body">
+            <div :class="['render__filter-aside', activeFilter]">
+                <filter-category :array-data="subcategoryList" @category="categoryFilter" />
+                <filter-size :sizes-data="sizesList" @size="sizeFilter" />
+                <filter-color @color="colorFilter" />
+                <filter-price @price="priceFilter" />
+            </div>
+            <div class="render__right-aside">
+                <sort-select @sort-product="sortProductList" />
+                <div class="render__card">
+                    <div v-for="(product, index) in getFilteredProductList" :key="index">
+                        <product-item-card
+                            :product-item="product"
+                            :favorites-select="includesFavorites(product.id)"
+                            @selected="addFavorites"
+                            @add-cart="addCartItem"
+                        />
                     </div>
                 </div>
-                <button type="button" class="render__filter-icon-menu" @click="activeFilterMenu">
-                    <font-awesome-icon
-                        v-if="activeFilter == null"
-                        :icon="['fas', 'arrow-down-wide-short']"
-                        style="color: #ec8787f2"
-                    />
-                    <font-awesome-icon v-else :icon="['fas', 'arrow-up-wide-short']" style="color: #ec8787f2" />
-                </button>
             </div>
-            <div class="pagination">
-                <button
-                    v-for="(button, index) in getNumberButtonsToPagination"
-                    :key="index"
-                    type="button"
-                    :class="['pagination-button', { 'selected-pagination': index === selectPagination }]"
-                    @click="aListProductToRenderCard(index), selectedPagination(index)"
-                >
-                    {{ button }}
-                </button>
-            </div>
+            <button type="button" class="render__filter-icon-menu" @click="activeFilterMenu">
+                <font-awesome-icon
+                    v-if="activeFilter == null"
+                    :icon="['fas', 'arrow-down-wide-short']"
+                    style="color: #ec8787f2"
+                />
+                <font-awesome-icon v-else :icon="['fas', 'arrow-up-wide-short']" style="color: #ec8787f2" />
+            </button>
+        </div>
+        <div class="pagination">
+            <button
+                v-for="(button, index) in getNumberButtonsToPagination"
+                :key="index"
+                type="button"
+                :class="['pagination-button', { 'selected-pagination': index === selectPagination }]"
+                @click="aListProductToRenderCard(index), selectedPagination(index)"
+            >
+                {{ button }}
+            </button>
         </div>
     </div>
 </template>

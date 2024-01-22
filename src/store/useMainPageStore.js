@@ -9,8 +9,10 @@ export const useMainPageStore = defineStore('main_page', {
     }),
     getters: {
         getProductListToRender: ({ productListToRender }) => productListToRender,
-        getNumberButtonsToPagination: ({ dataProductList }) =>
-            Math.ceil(dataProductList.length / numberOfCardsAccordingToTheWidthOfTheScreen()),
+
+        getNumberButtonsToPagination: (state) => {
+            return Math.ceil(state.dataProductList.length / numberOfCardsAccordingToTheWidthOfTheScreen())
+        },
         getProductByNumberId: (state) => (idNumber) => {
             let indexFind = state.dataProductList.findIndex((product) => product.id == idNumber)
             return state.dataProductList[indexFind]
@@ -20,8 +22,10 @@ export const useMainPageStore = defineStore('main_page', {
         aListProductToRenderCard(indexButtonPagination) {
             let startIndexForCopy = indexButtonPagination * numberOfCardsAccordingToTheWidthOfTheScreen()
             let endIndexForCopy = (indexButtonPagination + 1) * numberOfCardsAccordingToTheWidthOfTheScreen()
+
             this.productListToRender = this.dataProductList.slice(startIndexForCopy, endIndexForCopy)
         },
+
         aSortedListProduct() {
             this.productListToRender = this.dataProductList.sort((a, b) => {
                 if (a.createDate < b.createDate) return -1

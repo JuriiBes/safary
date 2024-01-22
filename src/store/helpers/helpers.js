@@ -70,3 +70,7 @@ export function scrollToBlock(element) {
         behavior: 'smooth',
     })
 }
+
+export function searchForMatches(elementBySearch, searchElement) {
+    return elementBySearch.toLowerCase().includes(searchElement.toLowerCase())
+}
