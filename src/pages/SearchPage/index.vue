@@ -5,7 +5,13 @@
             You searched: <span> {{ valueResult }}</span>
         </div>
         <label class="search__label"
-            ><input v-model="valueSearch" type="text" placeholder="Search..." class="search__input" />
+            ><input
+                ref="notdatainput"
+                v-model="valueSearch"
+                type="text"
+                placeholder="Search..."
+                class="search__input"
+            />
             <button type="button" @click="runSearch">
                 <font-awesome-icon :icon="['fas', 'magnifying-glass']" style="color: #111111" />
             </button>
@@ -94,9 +100,11 @@ export default {
         },
         // ---Cart
         runSearch() {
-            this.aValueSearch(this.valueSearch)
-            this.valueResult = this.valueSearch
-            this.valueSearch = null
+            if (this.valueSearch) {
+                this.aValueSearch(this.valueSearch)
+                this.valueResult = this.valueSearch
+                this.valueSearch = null
+            } else this.$refs.notdatainput.focus()
         },
     },
 }

@@ -7,6 +7,7 @@
                 class="card__image-product"
                 @click="goToProductPage(productItem.id)"
             />
+
             <div class="card__hover">
                 <button type="button" class="card__favorites-add" @click="addToFavorites(productItem.id)">
                     <font-awesome-icon
@@ -22,7 +23,9 @@
                 </button>
             </div>
         </div>
-        <div class="card__product-name" @click="goToProductPage(productItem.id)">{{ productItem.nameProduct }}</div>
+        <div class="card__product-name" @click="goToProductPage(productItem.id)">
+            {{ productItem.nameProduct }}
+        </div>
         <div class="card__price" @click="goToProductPage(productItem.id)">₦ {{ productItem.price }}</div>
     </div>
 </template>
@@ -40,6 +43,7 @@ export default {
         },
     },
     emits: ['selected', 'addCart'],
+
     methods: {
         addToFavorites(itemId) {
             this.$emit('selected', itemId)

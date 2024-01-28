@@ -1,6 +1,6 @@
 <template>
     <div class="sort-by">
-        <div class="select__custom">
+        <div id="select-body" class="select__custom">
             <div :class="['select__title', selectTitleBorder]" @click="selectedOptions">
                 Sort by:
                 <div class="select__main-line">
@@ -56,6 +56,7 @@ export default {
             this.selectTitleBorder = null
         },
         selectedOptions() {
+            this.closeClickOutsideSelect()
             if (this.visibleOptions === null) {
                 this.animationArrow = 'arrow-animation'
                 this.visibleOptions = 'option-visible'
@@ -64,6 +65,26 @@ export default {
                 this.visibleOptions = null
                 this.animationArrow = null
                 this.selectTitleBorder = null
+            }
+        },
+        closeClickOutsideSelect() {
+            document.documentElement.addEventListener('click', this.closeSelect)
+        },
+        closeSelect(event) {
+            let mouseX = event.pageX
+            let mouseY = event.pageY
+            let bodyElement = document.getElementById('select-body').getBoundingClientRect()
+
+            if (
+                mouseX < bodyElement.left ||
+                mouseX > bodyElement.right ||
+                mouseY < bodyElement.top ||
+                mouseY > bodyElement.bottom
+            ) {
+                this.visibleOptions = null
+                this.animationArrow = null
+                this.selectTitleBorder = null
+                document.documentElement.removeEventListener('click', this.closeSelect)
             }
         },
     },

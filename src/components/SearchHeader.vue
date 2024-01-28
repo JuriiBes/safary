@@ -1,7 +1,7 @@
 <template>
     <div class="search">
         <label class="search__label"
-            ><input v-model="valueSearch" type="text" placeholder="Search..." class="search__input" />
+            ><input ref="notdata" v-model="valueSearch" type="text" placeholder="Search..." class="search__input" />
             <button type="button" @click="runSearch">
                 <font-awesome-icon :icon="['fas', 'magnifying-glass']" style="color: #111111" />
             </button>
@@ -20,14 +20,18 @@ export default {
     },
     methods: {
         runSearch() {
-            this.$router.push({
-                name: 'search',
-                params: {
-                    request: this.valueSearch,
-                },
-            })
-            this.valueSearch = null
-            this.$emit('clickSearch')
+            if (this.valueSearch) {
+                this.$router.push({
+                    name: 'search',
+                    params: {
+                        request: this.valueSearch,
+                    },
+                })
+                this.valueSearch = null
+                this.$emit('clickSearch')
+            } else {
+                this.$refs.notdata.focus()
+            }
         },
     },
 }

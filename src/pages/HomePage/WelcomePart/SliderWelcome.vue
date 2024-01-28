@@ -8,6 +8,7 @@
         :pagination="{
             clickable: true,
         }"
+        :autoplay="{ delay: 3000, disableOnInteraction: false }"
         @swiper="onSwiper"
         @slide-change="onSlideChange"
     >
@@ -27,7 +28,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/scss'
 import 'swiper/scss/pagination'
 import 'swiper/scss/autoplay'
-// :autoplay="{ delay: 3000, disableOnInteraction: false }"
+
 export default {
     components: {
         Swiper,

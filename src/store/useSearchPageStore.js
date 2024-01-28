@@ -1,11 +1,10 @@
 import { defineStore } from 'pinia'
-import { productList } from '@/data/products'
+import { useMainPageStore } from '@/store/useMainPageStore'
 import { numberOfCardsAccordingToTheWidthOfTheScreen } from '@/store/helpers/helpers'
 import { searchForMatches } from '@/store/helpers/helpers'
 
 export const useSearchPageStore = defineStore('search_page', {
     state: () => ({
-        dataProductList: productList,
         productListToRender: null,
         resultSearch: null,
         valueSearch: null,
@@ -25,7 +24,8 @@ export const useSearchPageStore = defineStore('search_page', {
             this.productListToRender = this.resultSearch.slice(startIndexForCopy, endIndexForCopy)
         },
         aSortedListProduct() {
-            this.productListToRender = this.dataProductList.sort((a, b) => {
+            const dataProduct = useMainPageStore()
+            this.productListToRender = dataProduct.dataProductList.sort((a, b) => {
                 if (a.createDate < b.createDate) return -1
                 if (a.createDate > b.createDate) return 1
                 return 0
@@ -33,15 +33,11 @@ export const useSearchPageStore = defineStore('search_page', {
         },
         aValueSearch(value) {
             this.valueSearch = value
-            if (value !== null) {
-                this.aResultSearchList()
-            } else {
-                this.resultSearch = this.dataProductList
-                this.aListProductToRenderCard(0)
-            }
+            this.aResultSearchList()
         },
         aResultSearchList() {
-            this.resultSearch = this.dataProductList.filter((product) => {
+            const dataProduct = useMainPageStore()
+            this.resultSearch = dataProduct.dataProductList.filter((product) => {
                 if (
                     searchForMatches(product.nameProduct, this.valueSearch) == true ||
                     searchForMatches(product.subcategoryProduct, this.valueSearch) == true

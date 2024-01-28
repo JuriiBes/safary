@@ -6,8 +6,10 @@
             egestas odio parturient. Morbi ut lorem in erat. Et et molestie diam diam ultricies. Scelerisque duis diam
             ac cras dictum adipiscing. Venenatis at sit proin ut vitae adipiscing id facilisis.
         </div>
-
-        <div class="shop-style__products">
+        <div v-if="isLoading == true">
+            <loading-page />
+        </div>
+        <div v-else class="shop-style__products">
             <div v-for="product in getProductListToRender" :key="product.id" class="shop-style__item">
                 <product-item-card
                     :product-item="product"
@@ -36,11 +38,13 @@ import { mapActions, mapState } from 'pinia'
 import { useMainPageStore } from '@/store/useMainPageStore'
 import { useUserAccountStore } from '@/store/useUserAccountStore'
 import ProductItemCard from '@/components/ProductItemCard'
+import LoadingPage from '@/components/LoadingPage'
 import { scrollToBlock } from '@/store/helpers/helpers'
 export default {
     name: 'ShopStylePage',
     components: {
         ProductItemCard,
+        LoadingPage,
     },
     data() {
         return {
@@ -50,21 +54,13 @@ export default {
     },
 
     computed: {
-        ...mapState(useMainPageStore, ['getProductListToRender', 'getNumberButtonsToPagination']),
+        ...mapState(useMainPageStore, ['getProductListToRender', 'getNumberButtonsToPagination', 'isLoading']),
         ...mapState(useUserAccountStore, ['getIncludesProductInFavoritesList']),
     },
-    created() {
-        this.aSortedListProduct()
-        // Pagination
-        this.aListProductToRenderCard(0)
-        // ---Pagination
+    created() {},
 
-        // Favorites
-
-        // ---Favorites
-    },
     methods: {
-        ...mapActions(useMainPageStore, ['aListProductToRenderCard', 'aSortedListProduct']),
+        ...mapActions(useMainPageStore, ['aListProductToRenderCard']),
         ...mapActions(useUserAccountStore, ['addToFavoritesList', 'addToCartList']),
         // Pagination
         selectedPagination(index) {

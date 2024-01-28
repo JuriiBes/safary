@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { productList } from '@/data/products'
+import { useMainPageStore } from '@/store/useMainPageStore'
 import { numberOfCardsAccordingCategoriesPagesToTheWidthOfTheScreen } from '@/store/helpers/helpers'
 import { filterProductsList } from '@/store/helpers/helpers'
 import { sortedList } from '@/store/helpers/helpers'
@@ -47,7 +47,8 @@ export const useProductCategoryPageStore = defineStore('render_page', {
             }
         },
         aCreateDataProductList(categoryName) {
-            this.dataProductList = productList.filter((product) => product.category == categoryName)
+            const dataProduct = useMainPageStore()
+            this.dataProductList = dataProduct.dataProductList.filter((product) => product.category == categoryName)
         },
         aFilteredProductList(filterData) {
             this.dataFiltersProductList = this.dataProductList.filter((product) => {

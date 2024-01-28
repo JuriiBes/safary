@@ -10,7 +10,7 @@
                         >Accessories</router-link
                     >
                 </nav>
-                <div class="header__logo">
+                <div class="header__logo" @click="goToHomePage">
                     <img :src="require('@/assets/logo/logo.svg')" alt="logo" />
                 </div>
                 <div class="header__user-side user-side">
@@ -40,6 +40,7 @@
 <script>
 import { mapActions } from 'pinia'
 
+import { useMainPageStore } from '@/store/useMainPageStore'
 import { useUserAccountStore } from '@/store/useUserAccountStore'
 import SearchHeader from '@/components/SearchHeader.vue'
 import CounterItems from '@/components/CounterItems.vue'
@@ -58,11 +59,14 @@ export default {
         }
     },
     created() {
+        this.loadList()
+
         this.receivingUserData(0)
     },
 
     methods: {
         ...mapActions(useUserAccountStore, ['receivingUserData']),
+        ...mapActions(useMainPageStore, ['loadList', 'aSortedListProduct', 'aListProductToRenderCard']),
         menuBurger() {
             if (!this.activeBurger) {
                 this.activeBurger = 'active'
@@ -84,6 +88,9 @@ export default {
                 this.burgerClose = null
                 document.documentElement.style.overflow = 'auto'
             }
+        },
+        goToHomePage() {
+            this.$router.push({ name: 'home' })
         },
     },
 }
@@ -132,6 +139,9 @@ export default {
             @media (max-width: 61.9875rem) {
                 height: 37px;
             }
+        }
+        @media (min-width: 992px) {
+            cursor: pointer;
         }
     }
     // .header__burger
