@@ -1,13 +1,15 @@
 <template>
     <div class="loading-page">
-        <div class="loading-page__animate-part">
-            <div class="loading-page__item"></div>
-            <div class="loading-page__item"></div>
-            <div class="loading-page__item"></div>
-            <div class="loading-page__item"></div>
-            <div class="loading-page__item"></div>
+        <div class="loading-page__body">
+            <div class="loading-page__text">Loading . . .</div>
+            <div class="loading-page__animate-part">
+                <div class="loading-page__item"></div>
+                <div class="loading-page__item"></div>
+                <div class="loading-page__item"></div>
+                <div class="loading-page__item"></div>
+                <div class="loading-page__item"></div>
+            </div>
         </div>
-        <div class="loading-page__text">Loading . . .</div>
     </div>
 </template>
 
@@ -19,10 +21,19 @@ export default {
 
 <style lang="scss" scoped>
 .loading-page {
-    display: flex;
-    flex-direction: column;
-    row-gap: 30px;
-    padding: 35px 0;
+    width: 100%;
+    height: 70vh;
+    display: grid;
+    place-items: center;
+    // .loading-page__body
+    &__body {
+        display: flex;
+        flex-direction: column;
+        // align-items: center;
+        // justify-content: center;
+        row-gap: 30px;
+        padding: 35px 0;
+    }
     // .loading-page__animate-part
     &__animate-part {
         display: flex;

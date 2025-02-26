@@ -13,6 +13,7 @@ class DbOperations {
                 ...doc.data(),
             })
         })
+
         return list
     }
 

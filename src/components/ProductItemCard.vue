@@ -18,7 +18,9 @@
                     <font-awesome-icon v-else :icon="['fas', 'heart']" style="color: #ed165f" />
                 </button>
                 <button type="button" class="card__cart-add" @click="addToCartList(productItem.id)">
-                    ADD TO CART
+                    <p v-if="includesCart < 0">ADD TO CART</p>
+                    <p v-else>ADDED to CART</p>
+
                     <font-awesome-icon :icon="['fas', 'cart-shopping']" style="color: #ed165f" />
                 </button>
             </div>
@@ -40,6 +42,10 @@ export default {
         },
         favoritesSelect: {
             type: Boolean,
+        },
+        includesCart: {
+            type: Number,
+            default: 0,
         },
     },
     emits: ['selected', 'addCart'],
@@ -93,6 +99,13 @@ export default {
         padding-top: 150%; /* 450/300 */
         overflow: hidden;
         margin-bottom: 1rem;
+        @media (min-width: 992px) {
+            &:hover {
+                .card__image-product {
+                    transform: translateY(-4px);
+                }
+            }
+        }
     }
     // .card__image-product
     &__image-product {
@@ -102,6 +115,7 @@ export default {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transition: 0.3s;
     }
 
     // .card__hover
@@ -152,6 +166,9 @@ export default {
     }
     // .card__cart-add
     &__cart-add {
+        display: flex;
+        flex-wrap: nowrap;
+        column-gap: 5px;
         height: 2.1875rem;
         background-color: #fff;
         border: 1px solid #fff;

@@ -96,6 +96,7 @@ export default {
     display: flex;
     justify-content: flex-end;
     padding: 0 25px 6px;
+    cursor: pointer;
     @media (max-width: 991.98px) {
         padding: 0 0 6px;
     }

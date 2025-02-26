@@ -48,6 +48,7 @@ export const useProductCategoryPageStore = defineStore('render_page', {
         },
         aCreateDataProductList(categoryName) {
             const dataProduct = useMainPageStore()
+
             this.dataProductList = dataProduct.dataProductList.filter((product) => product.category == categoryName)
         },
         aFilteredProductList(filterData) {

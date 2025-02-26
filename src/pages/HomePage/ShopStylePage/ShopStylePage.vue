@@ -14,6 +14,7 @@
                 <product-item-card
                     :product-item="product"
                     :favorites-select="includesFavorites(product.id)"
+                    :includes-cart="includesCart(product.id)"
                     @selected="addFavorites"
                     @add-cart="addCartItem"
                 />
@@ -55,7 +56,7 @@ export default {
 
     computed: {
         ...mapState(useMainPageStore, ['getProductListToRender', 'getNumberButtonsToPagination', 'isLoading']),
-        ...mapState(useUserAccountStore, ['getIncludesProductInFavoritesList']),
+        ...mapState(useUserAccountStore, ['getIncludesProductInFavoritesList', 'getIncludesProductInCart']),
     },
     created() {},
 
@@ -80,6 +81,9 @@ export default {
         // Cart
         addCartItem(itemId) {
             this.addToCartList(itemId)
+        },
+        includesCart(itemId) {
+            return this.getIncludesProductInCart(itemId)
         },
         // ---Cart
     },

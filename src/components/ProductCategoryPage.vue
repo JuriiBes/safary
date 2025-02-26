@@ -10,11 +10,15 @@
             </div>
             <div class="render__right-aside">
                 <sort-select @sort-product="sortProductList" />
-                <div class="render__card">
+                <div v-if="isLoading == true">
+                    <loading-page />
+                </div>
+                <div v-else class="render__card">
                     <div v-for="(product, index) in getFilteredProductList" :key="index">
                         <product-item-card
                             :product-item="product"
                             :favorites-select="includesFavorites(product.id)"
+                            :includes-cart="includesCart(product.id)"
                             @selected="addFavorites"
                             @add-cart="addCartItem"
                         />
@@ -51,6 +55,8 @@ import FilterSize from '@/components/FilterAside/FilterSize'
 import FilterPrice from '@/components/FilterAside/FilterPrice'
 import ProductItemCard from '@/components/ProductItemCard'
 import SortSelect from '@/components/SortSelect.vue'
+import LoadingPage from '@/components/LoadingPage'
+import { useMainPageStore } from '@/store/useMainPageStore'
 import { scrollToBlock } from '@/store/helpers/helpers'
 import { mapState, mapActions } from 'pinia'
 import { useProductCategoryPageStore } from '@/store/useProductCategoryPageStore'
@@ -64,6 +70,7 @@ export default {
         FilterPrice,
         ProductItemCard,
         SortSelect,
+        LoadingPage,
     },
     props: {
         titleCategory: {
@@ -94,8 +101,9 @@ export default {
         }
     },
     computed: {
+        ...mapState(useMainPageStore, ['isLoading']),
         ...mapState(useProductCategoryPageStore, ['getFilteredProductList', 'getNumberButtonsToPagination']),
-        ...mapState(useUserAccountStore, ['getIncludesProductInFavoritesList']),
+        ...mapState(useUserAccountStore, ['getIncludesProductInFavoritesList', 'getIncludesProductInCart']),
     },
     watch: {
         dataFilter: {
@@ -110,11 +118,9 @@ export default {
         },
     },
     created() {
+        // console.log('aaaaaaaaaaaaaaa----------------------------')
         this.aCreateDataProductList(this.titleCategory)
         this.aSortSelectValue('createDate')
-        // Favorites
-
-        // ---Favorites
 
         // Pagination
         this.aListProductToRenderCard(0)
@@ -123,6 +129,7 @@ export default {
     mounted() {
         this.aFilteredProductList(this.dataFilter)
     },
+
     methods: {
         ...mapActions(useProductCategoryPageStore, [
             'aCreateDataProductList',
@@ -174,10 +181,14 @@ export default {
         includesFavorites(itemId) {
             return this.getIncludesProductInFavoritesList(itemId)
         },
+
         // ---Favorites
         // Cart
         addCartItem(itemId) {
             this.addToCartList(itemId)
+        },
+        includesCart(itemId) {
+            return this.getIncludesProductInCart(itemId)
         },
         // ---Cart
     },
